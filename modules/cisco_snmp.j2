@@ -1,0 +1,12 @@
+!!!!! BEGIN cisco_snmp.j2 !!!!!
+snmp-server user admin readonly v3 auth sha cisco priv aes 128 cisco 
+snmp-server group readonly v3 priv read READ_GROUP notify NOTIFY_GROUP
+snmp-server view VIEW_GROUP internet included
+snmp-server trap-source Loopback0
+snmp-server location "{{HOSTNAME}}"
+snmp-server enable traps snmp coldstart warmstart
+{% for HOST in SNMP_HOSTS -%}
+snmp-server host {{HOST}} version 3 priv admin
+{% endfor -%}
+snmp-server manager
+!!!!! END cisco_snmp.j2 !!!!!

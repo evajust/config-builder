@@ -1,0 +1,9 @@
+!!!!! BEGIN cisco_initial_mgmt.j2 !!!!!
+interface G0
+ ip address {{MGMT_INT_IP}} 255.255.255.0
+ no shut
+
+ip access-list extended Management_ACL
+ permit tcp host 10.1.1.1 any eq 22
+ deny ip any any log
+!!!!! END cisco_initial_mgmt.j2 !!!!!

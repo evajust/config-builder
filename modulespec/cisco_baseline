@@ -1,0 +1,4 @@
+{% include './modules/cisco_ssh.j2' %}
+{% include './modules/cisco_vlan_baseline.j2' %}
+{% include './modules/cisco_snmp.j2' %}
+{% include './modules/cisco_login_banner.j2' %}

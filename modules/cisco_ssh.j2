@@ -1,0 +1,10 @@
+!!!!! BEGIN cisco_ssh.j2 !!!!!
+hostname {{HOSTNAME}}
+ip domain-name lab.com
+
+crypto key gen rsa mod 1024
+
+ip ssh time-out 20
+ip ssh source-interface Loopback0
+ip ssh version 2
+!!!!! END cisco_ssh.j2 !!!!!

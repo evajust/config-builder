@@ -1,0 +1,41 @@
+!!!!! BEGIN cisco_interfaces.j2 !!!!!
+{% for INTERFACE,INT_VARS in LOOPBACK_INTS.items() %}
+interface {{ INTERFACE }}
+ {% if INT_VARS['DESCRIPTION'] -%}
+  description {{ INT_VARS['DESCRIPTION'] }}
+ {% endif -%}
+ ip address {{ INT_VARS['IP'] }} 255.255.255.255
+ no ip redirects
+ no ip proxy-arp
+{% endfor %}
+
+{% if ROUTED_INTERFACES -%}
+{% for INTERFACE,INT_VARS in ROUTED_INTERFACES.items() -%}
+interface {{ INTERFACE }}
+{% include './modules/cisco_interface_routed_active.j2' %}
+ description {{ INT_VARS['DESCRIPTION'] }}
+ ip address {{ INT_VARS['IP'] }} 255.255.255.252
+ {% endif -%}
+  delay {{ INT_VARS['DELAY']|default('10') }}
+ {% if INT_VARS['MEDIA_TYPE_SFP'] -%}
+  media-type sfp
+ {% endif -%}
+ {% if INTERFACE[:6] == 'Tunnel' -%}
+  tunnel source {{ INT_VARS['TUNNEL_SOURCE'] }}
+  tunnel destination {{ INT_VARS['TUNNEL_DESTINATION'] }}
+ {% endif %}
+{% endfor -%}
+{% endif -%}
+
+{% if SWITCHPORT_INTERFACES -%}
+{% for INTERFACE,INT_VARS in SWITCHPORT_INTERFACES.items() -%}
+interface {{ INTERFACE }}
+{% include './modules/cisco_interface_switchport_active.j2' %}
+ description {{ INT_VARS['DESCRIPTION'] }}
+ switchport access vlan {{INT_VARS['VLAN']}}
+ {% if INT_VARS['MEDIA_TYPE_SFP'] -%}
+  media-type sfp
+ {% endif -%}
+{% endfor -%}
+{% endif -%}
+!!!!! END cisco_interfaces.j2 !!!!!

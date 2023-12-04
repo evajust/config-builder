@@ -1,0 +1,8 @@
+!!!!! BEGIN cisco_trunks.j2 !!!!!
+{% for INTERFACE,DESCRIPTION in TRUNK_INTERFACES.items() %}
+interface {{INTERFACE}}
+ description {{DESCRIPTION}}
+ switchport mode trunk
+ no shut
+{% endfor %}
+!!!!! END cisco_trunks.j2 !!!!!

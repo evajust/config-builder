@@ -1,0 +1,5 @@
+!!!!!! BEGIN cisco_static_routes.j2 !!!!!!!
+{% for DESTINATION, NEXT_HOP in STATIC_ROUTES.items() -%}
+ip route {{DESTINATION}} {{NEXT_HOP}}
+{% endfor -%}
+!!!!!! END cisco_static_routes.j2 !!!!!!!

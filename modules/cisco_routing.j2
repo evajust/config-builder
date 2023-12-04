@@ -1,0 +1,33 @@
+!!!!! BEGIN cisco_routing.j2 !!!!!
+{% if EIGRP_NETWORKS %}
+router eigrp 1
+ passive-interface default
+ eigrp router-id {{ LOOPBACK_INTS['Loopback0']['IP'] }}
+ {% for NETWORK, MASK in EIGRP_NETWORKS.items() -%}
+ network {{ NETWORK }} {{ MASK }}
+ {% endfor -%}
+ {% for INTERFACE in EIGRP_INTERFACES -%}
+ no passive-interface {{ INTERFACE }}
+ {% endfor -%}
+{% endif -%}
+
+{% if OSPF_NETWORKS %}
+router ospf 1
+ passive-interface default
+ router-id {{ LOOPBACK_INTS['Loopback0']['IP'] }}
+ {% for NETWORK, MASK in OSPF_NETWORKS.items() -%}
+ network {{ NETWORK }} {{ MASK }} area 0
+ {% endfor -%}
+ {% for INTERFACE in OSPF_INTERFACES -%}
+ no passive-interface {{ INTERFACE }}
+ {% endfor -%}
+{% endif -%}
+
+{% if OSPF_NETWORKS and EIGRP_NETWORKS %}
+router eigrp 100
+ redistribute ospf 100 metric 1536 20000 255 1 1500
+
+router ospf 100
+ redistribute eigrp 100 subnets
+{% endif -%}
+!!!!! END cisco_routing.j2 !!!!!

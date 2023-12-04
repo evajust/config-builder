@@ -1,0 +1,10 @@
+!!!!! BEGIN cisco_baseline.j2 !!!!!
+
+no ip domain-lookup
+no ip domain lookup
+no cdp run
+
+ip routing
+
+username cisco privilege 15 algorithm-type scrypt secret cisco
+!!!!! END cisco_baseline.j2 !!!!!

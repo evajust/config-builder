@@ -1,0 +1,33 @@
+###################################################
+##        begin: junos_fw_interfaces             ##
+###################################################
+
+
+replace: interfaces {
+    ge-0/0/0 {
+        unit 0 {
+            family inet {
+                address 10.0.{{ THIRD_OCTET }}.1/30;
+            }
+        }
+    }
+    ge-0/0/1 {
+        unit 0 {
+            family inet {
+                address 11.0.{{ THIRD_OCTET }}.1/30;
+            }
+        }
+    }
+    lo0 {
+        unit 0 {
+            family inet {
+                address 2.1.{{ THIRD_OCTET }}/32;
+            }
+        }
+    }
+}
+
+
+###################################################
+##          end: junos_fw_interfaces             ##
+###################################################
